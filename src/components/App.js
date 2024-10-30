@@ -9,6 +9,7 @@ import Search from './pages/Search';
 import Contact from './pages/Contact';
 import Footer from './components/Footer';
 
+
 const App = () => (
   <Router>
     <Header />
