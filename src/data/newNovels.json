@@ -1,0 +1,21 @@
+[
+    {
+      "id": 1,
+      "title": "Beyond the Stars",
+      "description": "A science fiction novel set in a distant galaxy.",
+      "image": "/images/Beyond_the_Stars.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Echoes of the Past",
+      "description": "A captivating historical mystery.",
+      "image": "/images/Echoes_of_the_Past.jpg"
+    },
+    {
+      "id": 3,
+      "title": "The Last Kingdom",
+      "description": "A historical novel set in medieval times.",
+      "image": "/images/The_Last_Kingdom.jpg"
+    }
+  ]
+  

@@ -1,0 +1,37 @@
+/* src/pages/Search.css */
+.search-page {
+    text-align: center;
+    padding: 2em;
+  }
+  
+  .search-input {
+    padding: 0.5em;
+    width: 60%;
+    margin: 1em 0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 1em;
+  }
+  
+  .search-button {
+    padding: 0.5em 1em;
+    margin-left: 1em;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .search-button:hover {
+    background-color: #555;
+  }
+  
+  .search-results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1.5em;
+  }
+  

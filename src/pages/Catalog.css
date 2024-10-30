@@ -1,0 +1,18 @@
+/* src/pages/Catalog.css */
+.catalog-page {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .catalog-page h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
