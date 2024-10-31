@@ -22,7 +22,7 @@ const MysteryBooks = () => {
       id: 3,
       title: "The Hound of the Baskervilles",
       description: "A classic mystery novel featuring Sherlock Holmes and Dr. Watson.",
-      image: "/images/Secrets_of_the_Shadow.jpg"
+      image: "/images/Hound.jpg"
     }
   ];
 

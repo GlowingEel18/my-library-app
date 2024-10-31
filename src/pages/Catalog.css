@@ -1,18 +1,34 @@
 /* src/pages/Catalog.css */
-.catalog-page {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .catalog-page h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
-  
-  .catalog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 20px;
-  }
-  
+
+.catalog {
+  padding: 20px;
+  text-align: center;
+}
+
+.book-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.book-card {
+  width: 200px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.2s;
+}
+
+.book-card:hover {
+  transform: scale(1.05);
+}
+
+select {
+  margin-top: 20px;
+  padding: 5px;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #333;
+}

@@ -9,19 +9,19 @@ const NewNovels = () => {
       id: 1,
       title: "The Last Kingdom",
       description: "A historical novel set in medieval times.",
-      image: "/images/The_Last_Kingdom.jpg"
+      image: "/images/new-novel3.jpg"
     },
     {
       id: 2,
       title: "Echoes of the Past",
       description: "A captivating historical mystery.",
-      image: "/images/Echoes_of_the_Past.jpg"
+      image: "/images/new-novel4.jpg"
     },
     {
       id: 3,
       title: "Shadows in the Dark",
       description: "An intense thriller that will keep you on the edge of your seat.",
-      image: "/images/Shadows_in_the_Dark.jpg"
+      image: "/images/Shadow.jpg"
     }
   ];
 
