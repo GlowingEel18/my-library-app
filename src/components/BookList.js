@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import BookCard from './BookCard';
-import booksData from '../data/books.json';
-import './BooksList.css';
+import React from 'react';
+import './BookList.css';
 
-const BooksList = () => {
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    setBooks(booksData); // Load books data from JSON
-  }, []);
-
-  return (
-    <div className="books-list">
-      {books.map(book => (
-        <BookCard
-          key={book.id}
-          title={book.title}
-          description={book.description}
-          image={book.image}
-          genre={book.genre}
-        />
-      ))}
-    </div>
-  );
+const BookList = () => {
+    return (
+        <div className="book-list-container">
+            <div className="book-card">
+                <img src="path/to/image1.jpg" alt="New Novels" />
+                <h3>New Novels</h3>
+                <p>A fantastic new novel.</p>
+            </div>
+            <div className="book-card">
+                <img src="path/to/image2.jpg" alt="Mystery" />
+                <h3>Mystery</h3>
+                <p>A bestselling mystery.</p>
+            </div>
+            {/* Add more book cards as needed */}
+        </div>
+    );
 };
 
-export default BooksList;
+export default BookList;

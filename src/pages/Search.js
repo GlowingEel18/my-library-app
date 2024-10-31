@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import booksData from '../data/books.json';
 import BookItem from '../components/BookItem';
 import './Search.css';
+import './Search.js';
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState('');
