@@ -1,9 +1,7 @@
-// src/pages/Search.js
 import React, { useState } from 'react';
 import booksData from '../data/books.json';
 import BookItem from '../components/BookItem';
 import './Search.css';
-import './Search.js';
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -35,15 +33,18 @@ const Search = () => {
     <div className="search-page">
       <h2>Search Text</h2>
       <p>Search for your favorite books below or try a web search:</p>
-      <input
-        type="text"
-        placeholder="Please enter a search term or URL"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        onKeyDown={handleKeyDown} // Execute search on "Enter" key
-        className="search-input"
-      />
-      <button onClick={handleSearch} className="search-button">Search</button>
+      
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Please enter a search term or URL"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={handleKeyDown} // Execute search on "Enter" key
+          className="search-input"
+        />
+        <button onClick={handleSearch} className="search-button">Search</button>
+      </div>
 
       <div className="search-results">
         {filteredBooks.length > 0 ? (
@@ -55,9 +56,7 @@ const Search = () => {
               image={book.image}
             />
           ))
-        ) : (
-          searchPerformed && <p>No results found</p>
-        )}
+        ) : (searchPerformed)}
       </div>
     </div>
   );
