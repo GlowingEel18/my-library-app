@@ -3,25 +3,25 @@ import React from 'react';
 import './NewNovels.css';
 
 const NewNovels = () => {
-  // Define the book data as a JavaScript array
+  // Hardcoded book data array
   const books = [
     {
       id: 1,
       title: "The Last Kingdom",
       description: "A historical novel set in medieval times.",
-      image: "/images/new-novel3.jpg"
+      image: `${process.env.PUBLIC_URL}/images/New Novels.jpg`
     },
     {
       id: 2,
       title: "Echoes of the Past",
       description: "A captivating historical mystery.",
-      image: "/images/new-novel4.jpg"
+      image: `${process.env.PUBLIC_URL}/images/new-novel4.jpg`
     },
     {
       id: 3,
       title: "Shadows in the Dark",
       description: "An intense thriller that will keep you on the edge of your seat.",
-      image: "/images/Shadow.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Shadow.jpg`
     }
   ];
 

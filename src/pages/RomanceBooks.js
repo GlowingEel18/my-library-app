@@ -3,25 +3,25 @@ import React from 'react';
 import './RomanceBooks.css';
 
 const RomanceBooks = () => {
-  // Define the romance book data directly in the component
+  // Hardcoded romance book data
   const books = [
     {
       id: 1,
       title: "Pride and Prejudice",
       description: "A classic love story of Elizabeth Bennet and Mr. Darcy.",
-      image: "/images/Prejudice.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Prejudice.jpg`
     },
     {
       id: 2,
       title: "The Notebook",
       description: "A touching tale of everlasting love and commitment.",
-      image: "/images/The_Notebook.jpg"
+      image: `${process.env.PUBLIC_URL}/images/The_Notebook.jpg`
     },
     {
       id: 3,
       title: "Me Before You",
       description: "A heartbreaking romance that challenges perceptions of love.",
-      image: "/images/me_before_you.jpg"
+      image: `${process.env.PUBLIC_URL}/images/me_before_you.jpg`
     }
     // Add more romance books here if needed
   ];

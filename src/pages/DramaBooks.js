@@ -3,25 +3,25 @@ import React from 'react';
 import './DramaBooks.css';
 
 const DramaBooks = () => {
-  // Define the drama book data directly in the component
+  // Hardcoded drama book data
   const books = [
     {
       id: 1,
       title: "A Streetcar Named Desire",
       description: "A classic drama about tension, love, and tragedy in New Orleans.",
-      image: "/images/Desire.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Desire.jpg`
     },
     {
       id: 2,
       title: "Death of a Salesman",
       description: "An exploration of family dynamics and the American Dream.",
-      image: "/images/Salesman.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Salesman.jpg`
     },
     {
       id: 3,
       title: "Hamlet",
       description: "Shakespeare's timeless tale of revenge, betrayal, and fate.",
-      image: "/images/Hamlet.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Hamlet.jpg`
     }
     // Add more drama books here if needed
   ];

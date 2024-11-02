@@ -3,25 +3,25 @@ import React from 'react';
 import './NonFictionBooks.css';
 
 const NonFictionBooks = () => {
-  // Define the non-fiction book data directly in the component
+  // Hardcoded non-fiction book data
   const books = [
     {
       id: 1,
       title: "Sapiens: A Brief History of Humankind",
       description: "A thought-provoking exploration of human history, culture, and evolution.",
-      image: "/images/Humankind.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Humankind.jpg`
     },
     {
       id: 2,
       title: "Educated",
       description: "A memoir of resilience, determination, and the transformative power of education.",
-      image: "/images/Educated.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Educated.jpg`
     },
     {
       id: 3,
       title: "Becoming",
       description: "Michelle Obama's journey from the South Side of Chicago to the White House.",
-      image: "/images/Becoming.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Becoming.jpg`
     }
     // Add more non-fiction books here if needed
   ];

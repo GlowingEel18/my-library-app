@@ -2,7 +2,7 @@
     {
       "id": 1,
       "title": "The Awakening",
-      "image": "/images/TheAwakening.jpg",
+      "image": "../images/TheAwakening.jpg",
       "genre": "Fiction"
     },
     {

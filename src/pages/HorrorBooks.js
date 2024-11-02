@@ -3,25 +3,25 @@ import React from 'react';
 import './HorrorBooks.css';
 
 const HorrorBooks = () => {
-  // Define the horror book data directly in the component
+  // Hardcoded horror book data
   const books = [
     {
       id: 1,
       title: "Dracula",
       description: "A Gothic horror classic that tells the story of Count Dracula's attempts to move from Transylvania to England.",
-      image: "/images/Dracula.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Dracula.jpg`
     },
     {
       id: 2,
       title: "The Shining",
       description: "A psychological horror novel about a family in a haunted hotel.",
-      image: "/images/TheShining.jpg"
+      image: `${process.env.PUBLIC_URL}/images/TheShining.jpg`
     },
     {
       id: 3,
       title: "Frankenstein",
       description: "A tale of a scientist who creates a monster, leading to horror and tragedy.",
-      image: "/images/Frankenstein.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Frankenstein.jpg`
     }
     // Add more horror books here if needed
   ];

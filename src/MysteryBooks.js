@@ -3,33 +3,33 @@ import React from 'react';
 import './MysteryBooks.css';
 
 const MysteryBooks = () => {
-  // Define the mystery book data directly in the component
+  // Hardcoded mystery book data
   const books = [
     {
       id: 1,
       title: "The Silent Patient",
-      author: "Alex Micchaelides",
+      author: "Alex Michaelides",
       description: "A psychological mystery about a woman who refuses to speak after a horrific event.",
-      image: "/images/TheSilentObserver.jpg"
+      image: `${process.env.PUBLIC_URL}/images/TheSilentObserver.jpg`
     },
     {
       id: 2,
       title: "Big Little Lies",
-      description: "Big Little Lies by Liane Moriarty is a novel about the lives of three young mothers in a seemingly ideal Australian beach community.",
-      image: "/images/BigLittleLies.jpg"
+      description: "A novel about the lives of three young mothers in a seemingly ideal Australian beach community.",
+      image: `${process.env.PUBLIC_URL}/images/BigLittleLies.jpg`
     },
     {
       id: 3,
       title: "The Hound of the Baskervilles",
       description: "A classic mystery novel featuring Sherlock Holmes and Dr. Watson.",
-      image: "/images/Hound.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Hound.jpg`
     }
   ];
 
   return (
     <div className="mystery-books">
       <main>
-        <h2>Featured Mystery Book</h2>
+        <h2>Featured Mystery Books</h2>
         <div className="book-grid">
           {books.map((book) => (
             <div className="book-card" key={book.id}>

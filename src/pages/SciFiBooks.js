@@ -3,25 +3,25 @@ import React from 'react';
 import './SciFiBooks.css';
 
 const SciFiBooks = () => {
-  // Define the sci-fi book data directly in the component
+  // Hardcoded sci-fi book data
   const books = [
     {
       id: 1,
       title: "Dune",
       description: "A science fiction saga set in a desert world with power struggles over spice.",
-      image: "/images/Dune.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Dune.jpg`
     },
     {
       id: 2,
       title: "Neuromancer",
       description: "A cyberpunk thriller that shaped the genre, exploring AI and virtual reality.",
-      image: "/images/Neuromancer.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Neuromancer.jpg`
     },
     {
       id: 3,
       title: "Foundation",
       description: "A tale of a galactic empire's fall and one man's vision to shorten the chaos.",
-      image: "/images/Foundation.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Foundation.jpg`
     }
     // Add more sci-fi books here if needed
   ];

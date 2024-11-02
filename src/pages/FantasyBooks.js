@@ -3,25 +3,25 @@ import React from 'react';
 import './FantasyBooks.css';
 
 const FantasyBooks = () => {
-  // Define the fantasy book data directly in the component
+  // Hardcoded fantasy book data
   const books = [
     {
       id: 1,
       title: "The Enchanted Forest",
       description: "An epic journey through a magical forest.",
-      image: "/images/EnchantedForest.jpg"
+      image: `${process.env.PUBLIC_URL}/images/EnchantedForest.jpg`
     },
     {
       id: 2,
       title: "Harry Potter and the Sorcerer's Stone",
       description: "The magical world of wizards begins with young Harry Potter.",
-      image: "/images/HarryPotterThrone.jpg"
+      image: `${process.env.PUBLIC_URL}/images/HarryPotterThrone.jpg`
     },
     {
       id: 3,
       title: "A Song of Ice and Fire",
       description: "The epic fantasy saga of kings, queens, knights, and dragons.",
-      image: "/images/Ice&Fire.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Ice&Fire.jpg`
     }
   ];
 

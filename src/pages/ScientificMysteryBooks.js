@@ -3,25 +3,25 @@ import React from 'react';
 import './ScientificMysteryBooks.css';
 
 const ScientificMysteryBooks = () => {
-  // Define the scientific mystery book data directly in the component
+  // Hardcoded scientific mystery book data
   const books = [
     {
       id: 1,
       title: "The Silent Patient",
       description: "A gripping psychological thriller exploring silence and secrets.",
-      image: "/images/SilentPatient.jpg"
+      image: `${process.env.PUBLIC_URL}/images/SilentPatient.jpg`
     },
     {
       id: 2,
       title: "Angels & Demons",
       description: "A fast-paced thriller combining science, mystery, and historical intrigue.",
-      image: "/images/Angels&Demons.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Angels&Demons.jpg`
     },
     {
       id: 3,
       title: "The Andromeda Strain",
       description: "A sci-fi thriller about a deadly microorganism and a race against time.",
-      image: "/images/Andromeda.jpg"
+      image: `${process.env.PUBLIC_URL}/images/Andromeda.jpg`
     }
     // Add more scientific mystery books here if needed
   ];

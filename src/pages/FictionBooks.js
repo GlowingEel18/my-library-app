@@ -3,25 +3,25 @@ import React from 'react';
 import './FictionBooks.css';
 
 const FictionBooks = () => {
-  // Define the fiction book data directly in the component
+  // Hardcoded fiction book data
   const books = [
     {
       id: 1,
       title: "To Kill a Mockingbird",
       description: "A classic tale of justice and morality in a small Southern town.",
-      image: "/images/To Kill a Mockingbird.jpg"
+      image: `${process.env.PUBLIC_URL}/images/To Kill a Mockingbird.jpg`
     },
     {
       id: 2,
       title: "1984",
       description: "A dystopian novel depicting a totalitarian society under constant surveillance.",
-      image: "/images/1984.jpg"
+      image: `${process.env.PUBLIC_URL}/images/1984.jpg`
     },
     {
       id: 3,
       title: "The Great Gatsby",
       description: "A tragic story of wealth, love, and the American Dream in the 1920s.",
-      image: "/images/great_gatsby.jpg"
+      image: `${process.env.PUBLIC_URL}/images/great_gatsby.jpg`
     }
     // Add more fiction books here if needed
   ];
