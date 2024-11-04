@@ -1,7 +1,7 @@
+import React from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './components/Home';
+import Home from './components/Home';  // adjust the import paths as needed
 import About from './components/About';
-// other imports...
 
 function App() {
   return (
