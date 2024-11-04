@@ -1,10 +1,16 @@
-// src/App.js
-import { HashRouter as Router } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './components/Home';
+import About from './components/About';
+// other imports...
 
 function App() {
   return (
     <Router>
-      {/* Your routes go here */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        {/* Add other routes here */}
+      </Routes>
     </Router>
   );
 }
