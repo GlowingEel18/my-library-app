@@ -2,13 +2,13 @@
     {
       "id": 1,
       "title": "The Awakening",
-      "image": "../images/TheAwakening.jpg",
+      "image": "/images/TheAwakening.jpg",
       "genre": "Fiction"
     },
     {
       "id": 2,
       "title": "To Kill a Mockingbird",
-      "image": "/images/To Kill a MockingBird.jpg",
+      "image": "my-library-app/public/images/To Kill a MockingBird.jpg",
       "genre": "Fiction"
     },
     {

@@ -15,7 +15,7 @@ const RomanceBooks = () => {
       id: 2,
       title: "The Notebook",
       description: "A touching tale of everlasting love and commitment.",
-      image: `${process.env.PUBLIC_URL}/images/The_Notebook.jpg`
+      image: `${process.env.PUBLIC_URL}/images/the_notebook.jpg`
     },
     {
       id: 3,

@@ -9,7 +9,7 @@ const NewNovels = () => {
       id: 1,
       title: "The Last Kingdom",
       description: "A historical novel set in medieval times.",
-      image: `${process.env.PUBLIC_URL}/images/New Novels.jpg`
+      image: `${process.env.PUBLIC_URL}/images/new-novels3.jpg`
     },
     {
       id: 2,

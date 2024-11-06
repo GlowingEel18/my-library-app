@@ -9,7 +9,7 @@ const HorrorBooks = () => {
       id: 1,
       title: "Dracula",
       description: "A Gothic horror classic that tells the story of Count Dracula's attempts to move from Transylvania to England.",
-      image: `${process.env.PUBLIC_URL}/images/Dracula.jpg`
+      image: `${process.env.PUBLIC_URL}/images/dracula.jpg`
     },
     {
       id: 2,
@@ -21,7 +21,7 @@ const HorrorBooks = () => {
       id: 3,
       title: "Frankenstein",
       description: "A tale of a scientist who creates a monster, leading to horror and tragedy.",
-      image: `${process.env.PUBLIC_URL}/images/Frankenstein.jpg`
+      image: `${process.env.PUBLIC_URL}/images/frankenstein.jpg`
     }
     // Add more horror books here if needed
   ];

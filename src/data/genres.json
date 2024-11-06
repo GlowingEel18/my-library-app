@@ -33,7 +33,7 @@
     "id": 6,
     "title": "Nonfiction",
     "description": "An inspiring non-fiction.",
-    "image": "/images/NonFiction2.jpg"
+    "image": "public/images/NonFiction2.jpg"
   },
   {
     "id": 7,
