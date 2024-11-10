@@ -1,31 +1,23 @@
 import React, { useState, useEffect } from 'react';
 
 function App() {
-  // State hooks
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch data from API
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://my-library-backend-scms.onrender.com/api/books/');
-        console.log('response: ', result);
-        if (!response.ok) throw new Error('Network response was not ok');
-        const result = await response.json();
-        console.log('response from api: ', result);
-        setData(result);
-      } catch (error) {
-        setError(error.message);
-      } finally {
+    // Fetch data from an API
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data); // Set API response to state
         setLoading(false);
-      }
-    };
-
-    
-  fetchData();
-  }, []);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      });
+  }, []); // Empty dependency array ensures it runs once on component mount
 
   return (
     <div className="App">
