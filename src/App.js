@@ -11,6 +11,7 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await fetch('https://my-library-backend-scms.onrender.com/api/books/');
+        console.log('response: ', result);
         if (!response.ok) throw new Error('Network response was not ok');
         const result = await response.json();
         console.log('response from api: ', result);
@@ -22,7 +23,8 @@ function App() {
       }
     };
 
-    fetchData();
+    
+  fetchData();
   }, []);
 
   return (
@@ -30,7 +32,7 @@ function App() {
       <h1>Books List</h1>
       <ul>
         {data.map((book) => (
-          <li key={book.id}>
+          <li key={book._id}>
             <h2>{book.title}</h2>
             <p>Image: {book.image}</p>
             <p>Genre: {book.genre}</p>
