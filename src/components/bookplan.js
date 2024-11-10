@@ -1,15 +1,16 @@
 import "../styles/bookplan.css";
 
-const bookPlan = (bookPlan) => {
-const imageSrc = `https://server-js-81l8.onrender.com/api/books/images/${bookPlan.main_image}`;
+const booksPlan = (booksPlan) => {
+const imageSrc = `https://my-library-backend-scms.onrender.com/api/books`;
     return (
         <section className="house-plan columns">
             <section className="feature-image">
-            <img src={imageSrc} alt={bookPlan.name} />
+            <img src={imageSrc} alt={booksPlan.name} />
             </section>
-            <h3>{bookPlan.name}</h3>
+            <h3>{booksPlan.name}</h3>
             <p>
-                {bookPlan.features.map((feature) => {
+                {booksPlan.features.map((feature) => {
+                    console.log('feature: ' + feature);
                     return feature + ", ";
                 })}
             </p>
@@ -17,4 +18,4 @@ const imageSrc = `https://server-js-81l8.onrender.com/api/books/images/${bookPla
     );
 };
 
-export default bookPlan;
+export default booksPlan;
