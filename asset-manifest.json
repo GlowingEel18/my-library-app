@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/my-library-app/static/css/main.e3cafd45.css",
-    "main.js": "/my-library-app/static/js/main.e34d3b0e.js",
-    "static/js/488.b2141204.chunk.js": "/my-library-app/static/js/488.b2141204.chunk.js",
-    "index.html": "/my-library-app/index.html",
-    "main.e3cafd45.css.map": "/my-library-app/static/css/main.e3cafd45.css.map",
-    "main.e34d3b0e.js.map": "/my-library-app/static/js/main.e34d3b0e.js.map",
-    "488.b2141204.chunk.js.map": "/my-library-app/static/js/488.b2141204.chunk.js.map"
+    "main.css": "/react-housing/static/css/main.e3cafd45.css",
+    "main.js": "/react-housing/static/js/main.cf51e2f8.js",
+    "static/js/453.81ac0342.chunk.js": "/react-housing/static/js/453.81ac0342.chunk.js",
+    "index.html": "/react-housing/index.html",
+    "main.e3cafd45.css.map": "/react-housing/static/css/main.e3cafd45.css.map",
+    "main.cf51e2f8.js.map": "/react-housing/static/js/main.cf51e2f8.js.map",
+    "453.81ac0342.chunk.js.map": "/react-housing/static/js/453.81ac0342.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e3cafd45.css",
-    "static/js/main.e34d3b0e.js"
+    "static/js/main.cf51e2f8.js"
   ]
 }
