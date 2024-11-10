@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://my-library-backend-scms.onrender.com');
+        const response = await fetch('https://my-library-backend-scms.onrender.com/api/books/');
         if (!response.ok) throw new Error('Network response was not ok');
         const result = await response.json();
         console.log('response from api: ', result);
@@ -25,19 +25,15 @@ function App() {
     fetchData();
   }, []);
 
-  // Conditional rendering
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
   return (
     <div className="App">
-      <h1>User List</h1>
+      <h1>Books List</h1>
       <ul>
-        {data.map((user) => (
-          <li key={user.id}>
-            <h2>{user.name}</h2>
-            <p>Email: {user.email}</p>
-            <p>Phone: {user.phone}</p>
+        {data.map((book) => (
+          <li key={book.id}>
+            <h2>{book.title}</h2>
+            <p>Image: {book.image}</p>
+            <p>Genre: {book.genre}</p>
           </li>
         ))}
       </ul>
