@@ -7,7 +7,7 @@ function App() {
 
   useEffect(() => {
     // Fetch data from an API
-    fetch('https://jsonplaceholder.typicode.com/users')
+    fetch('https://my-library-backend-scms.onrender.com/api/books/')
       .then((response) => response.json())
       .then((data) => {
         setData(data); // Set API response to state
