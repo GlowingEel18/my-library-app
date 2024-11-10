@@ -1,37 +1,52 @@
-import React, { useState, useEffect } from 'react';
+// src/App.js
+import React from 'react';
+import './App.css';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Catalog from './pages/Catalog';
+import About from './pages/About';
+import Search from './pages/Search';
+import Contact from './pages/Contact';
+import NewNovels from './NewNovels';
+import MysteryBooks from './MysteryBooks';
+import FantasyBooks from './pages/FantasyBooks';
+import DramaBooks from './pages/DramaBooks';
+import FictionBooks from './pages/FictionBooks';
+import NonFictionBooks from './pages/NonFictionBooks';
+import RomanceBooks from './pages/RomanceBooks';
+import ScientificMysteryBooks from './pages/ScientificMysteryBooks';
+import SciFiBooks from './pages/SciFiBooks';
+import HorrorBooks from './pages/HorrorBooks';
+// Import MysteryBooks
 
 function App() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    // Fetch data from an API
-    fetch('https://my-library-backend-scms.onrender.com/api/books/')
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data); // Set API response to state
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setLoading(false);
-      });
-  }, []); // Empty dependency array ensures it runs once on component mount
-
   return (
-    <div className="App">
-      <h1>Books List</h1>
-      <ul>
-        {data.map((book) => (
-          <li key={book._id}>
-            <h2>{book.title}</h2>
-            <p>Image: {book.image}</p>
-            <p>Genre: {book.genre}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+   
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/catalog" element={<Catalog />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/new-novels" element={<NewNovels />} />
+        <Route path="/mystery" element={<MysteryBooks />} />
+        <Route path="/fantasy" element={<FantasyBooks />} />
+        <Route path="/drama" element={<DramaBooks />} />
+        <Route path="/fiction" element={<FictionBooks />} />
+        <Route path="/nonfiction" element={<NonFictionBooks />} />
+        <Route path="/romance" element={<RomanceBooks />} />
+        <Route path="/scientific-mystery" element={<ScientificMysteryBooks />} />
+        <Route path="/sci-fi" element={<SciFiBooks />} />
+        <Route path="/horror" element={<HorrorBooks />} />
+      </Routes>
+      <Footer />
+    </Router>
+    
   );
 }
 
