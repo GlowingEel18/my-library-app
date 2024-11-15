@@ -1,0 +1,12 @@
+#home {
+    position: relative;
+}
+
+#add-book {
+    color: white;
+    background: #d98282;
+    position: relative;
+    right: 1%;
+    top: -44px;
+    border: none;
+}

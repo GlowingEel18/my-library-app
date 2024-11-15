@@ -1,7 +1,8 @@
 // src/App.js
 import React from 'react';
 import './App.css';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import UploadPage from "./pages/UploadPage";
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -28,6 +29,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/upload" element={<UploadPage />} />
         <Route path="/home" element={<Home />} />
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/about" element={<About />} />
