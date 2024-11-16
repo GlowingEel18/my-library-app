@@ -1,4 +1,3 @@
-// src/pages/Home.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Home.css';
@@ -44,7 +43,7 @@ const Home = () => {
     formData.append('image', imageFile); // Append the image file to form data
 
     try {
-      const response = await axios.post('https://my-library-backend-scms.onrender.com/api/books', formData, {
+      const response = await axios.post('', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -92,19 +91,12 @@ const Home = () => {
       {showForm && (
         <div className="form-overlay">
           <form className="add-book-form" onSubmit={handleSubmit} encType="multipart/form-data">
+            <button type="button" className="close-button" onClick={() => setShowForm(false)}>X</button>
             <h3>Add a New Book</h3>
             <input
               type="text"
-              name="id"
-              placeholder="ID"
-              value={newBook.id}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              type="text"
               name="title"
-              placeholder="Title"
+              placeholder="Name: "
               value={newBook.title}
               onChange={handleInputChange}
               required
