@@ -37,7 +37,6 @@ const Home = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('id', newBook.id);
     formData.append('title', newBook.title);
     formData.append('description', newBook.description);
     formData.append('image', imageFile); // Append the image file to form data
@@ -49,7 +48,7 @@ const Home = () => {
         },
       });
       setBooks([...books, response.data]);
-      setNewBook({ id: '', title: '', description: '' });
+      setNewBook({ title: '', description: '' });
       setImageFile(null); // Clear the selected image file
       setShowForm(false);
     } catch (error) {
