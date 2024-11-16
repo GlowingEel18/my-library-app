@@ -95,16 +95,8 @@ const Home = () => {
             <h3>Add a New Book</h3>
             <input
               type="text"
-              name="id"
-              placeholder="ID"
-              value={newBook.id}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              type="text"
               name="title"
-              placeholder="Title"
+              placeholder="Name: "
               value={newBook.title}
               onChange={handleInputChange}
               required
