@@ -1,58 +1,82 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
-const AddBookForm = ({ onBookAdded }) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [error, setError] = useState('');
+const AddBookForm = () => {
+  const [formData, setFormData] = useState({
+    title: "",
+    author: "",
+    genre: "",
+    description: "",
+  });
+
+  const [message, setMessage] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
 
     try {
-      const response = await axios.post('http://localhost:3000/api/books', {
-        title,
-        description,
-        image_url: imageUrl, // Note that "image_url" needs to match the backend property
-      });
-      onBookAdded(response.data); // Callback to update the book list
-      setTitle('');
-      setDescription('');
-      setImageUrl('');
+      const response = await axios.post("http://localhost:5000/books", formData);
+      if (response.status === 200) {
+        setMessage("Book added successfully!");
+        setFormData({ title: "", author: "", genre: "", description: "" });
+      }
     } catch (error) {
-      console.error('Error adding book:', error);
-      setError('Failed to add the book. Please try again.');
+      console.error(error);
+      setMessage(
+        error.response?.data?.message || "Failed to add the book. Please try again."
+      );
     }
   };
 
   return (
-    <div className="form-overlay">
-      <form className="add-book-form" onSubmit={handleSubmit}>
-        <h3>Add a New Book</h3>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Image URL"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-          required
-        />
+    <div>
+      <h2>Add a New Book</h2>
+      {message && <p>{message}</p>}
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Title:</label>
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Author:</label>
+          <input
+            type="text"
+            name="author"
+            value={formData.author}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Genre:</label>
+          <input
+            type="text"
+            name="genre"
+            value={formData.genre}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Description:</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          ></textarea>
+        </div>
         <button type="submit">Add Book</button>
       </form>
     </div>
