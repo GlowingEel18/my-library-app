@@ -1,22 +1,49 @@
-import React from 'react';
-import './BookList.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const BookList = () => {
-    return (
-        <div className="book-list-container">
-            <div className="book-card">
-                <img src="path/to/image1.jpg" alt="New Novels" />
-                <h3>New Novels</h3>
-                <p>A fantastic new novel.</p>
-            </div>
-            <div className="book-card">
-                <img src="path/to/image2.jpg" alt="Mystery" />
-                <h3>Mystery</h3>
-                <p>A bestselling mystery.</p>
-            </div>
-            {/* Add more book cards as needed */}
-        </div>
-    );
+  const [books, setBooks] = useState([]);
+  const [message, setMessage] = useState("");
+
+  const fetchBooks = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/books");
+      setBooks(response.data);
+    } catch (error) {
+      console.error(error);
+      setMessage("Failed to load books.");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/books/${id}`);
+      setMessage("Book deleted successfully!");
+      fetchBooks();
+    } catch (error) {
+      console.error(error);
+      setMessage("Failed to delete the book.");
+    }
+  };
+
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  return (
+    <div>
+      <h2>Book List</h2>
+      {message && <p>{message}</p>}
+      <ul>
+        {books.map((book) => (
+          <li key={book.id}>
+            <strong>{book.title}</strong> by {book.author} 
+            <button onClick={() => handleDelete(book.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default BookList;

@@ -1,104 +1,123 @@
-// src/pages/Home.js
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './Home.css';
 
 const Home = () => {
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [newBook, setNewBook] = useState({ id: '', title: '', description: '' });
+  const [imageFile, setImageFile] = useState(null); // State for storing the selected image file
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get('https://my-library-backend-scms.onrender.com/api/books');
+        setBooks(response.data);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+        setError("Failed to load books. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBooks();
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewBook({ ...newBook, [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('title', newBook.title);
+    formData.append('description', newBook.description);
+    formData.append('image', imageFile); // Append the image file to form data
+
+    try {
+      const response = await axios.post('https://my-library-backend-scms.onrender.com/api/books', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setBooks([...books, response.data]);
+      setNewBook({ title: '', description: '' });
+      setImageFile(null); // Clear the selected image file
+      setShowForm(false);
+    } catch (error) {
+      console.error("Error adding book:", error);
+      setError("Failed to add the book. Please try again.");
+    }
+  };
+
+  if (loading) return <p>Loading books...</p>;
+  if (error) return <p className="error-message">{error}</p>;
+
   return (
     <div className="home">
-      <h2>Explore our Genres</h2>
-      <div className="genre-grid">
-        
-        {/* Genre Card for New Novels */}
-        <div className="genre-card">
-          <img src={`${process.env.PUBLIC_URL}/images/New Novels.jpg`} alt="New Novels" className="genre-image" />
-          <Link to="/new-novels">
-            <h3 className="genre-title">New Novels</h3>
-          </Link>
-          <p>A fantastic new novel.</p>
-        </div>
-
-        {/* Genre Card for Mystery */}
-        <div className="genre-card">
-          <img src={`${process.env.PUBLIC_URL}/images/Mystery.jpg`} alt="Mystery" className="genre-image" />
-          <Link to="/mystery">
-            <h3 className="genre-title">Mystery</h3>
-          </Link>
-          <p>A bestselling mystery.</p>
-        </div>
-
-        {/* Genre Card for Fantasy */}
-        <div className="genre-card">
-          <img src={`${process.env.PUBLIC_URL}/images/Fantasy.jpg`} alt="Fantasy" className="genre-image" />
-          <Link to="/fantasy">
-            <h3 className="genre-title">Fantasy</h3>
-          </Link>
-          <p>An exciting fantasy adventure.</p>
-        </div>
-
-        {/* Genre Card for Drama */}
-        <div className="genre-card">
-          <img src={`${process.env.PUBLIC_URL}/images/Drama.jpg`} alt="Drama" className="genre-image" />
-          <Link to="/drama">
-            <h3 className="genre-title">Drama</h3>
-          </Link>
-          <p>A thrilling crime drama.</p>
-        </div>
-
-        {/* Genre Card for Fiction */}
-        <div className="genre-card">
-          <img src={`${process.env.PUBLIC_URL}/images/Fiction2.jpg`} alt="Fiction" className="genre-image" />
-          <Link to="/fiction">
-            <h3 className="genre-title">Fiction</h3>
-          </Link>
-          <p>A gripping historical fiction.</p>
-        </div>
-
-        {/* Genre Card for Nonfiction */}
-        <div className="genre-card">
-          <img src={`${process.env.PUBLIC_URL}/images/Nonfiction2.jpg`} alt="Nonfiction" className="genre-image" />
-          <Link to="/nonfiction">
-            <h3 className="genre-title">Nonfiction</h3>
-          </Link>
-          <p>An inspiring non-fiction book.</p>
-        </div>
-
-        {/* Genre Card for Romance */}
-        <div className="genre-card">
-          <img src={`${process.env.PUBLIC_URL}/images/Romance.jpg`} alt="Romance" className="genre-image" />
-          <Link to="/romance">
-            <h3 className="genre-title">Romance</h3>
-          </Link>
-          <p>A heartwarming romance story.</p>
-        </div>
-
-        {/* Genre Card for Scientific Mystery */}
-        <div className="genre-card">
-          <img src={`${process.env.PUBLIC_URL}/images/Scientific Mystery.jpg`} alt="Scientific Mystery" className="genre-image" />
-          <Link to="/scientific-mystery">
-            <h3 className="genre-title">Scientific Mystery</h3>
-          </Link>
-          <p>A deep dive into a scientific mystery.</p>
-        </div>
-
-        {/* Genre Card for Sci-Fi */}
-        <div className="genre-card">
-          <img src={`${process.env.PUBLIC_URL}/images/Sci-Fi.jpg`} alt="Sci-Fi" className="genre-image" />
-          <Link to="/sci-fi">
-            <h3 className="genre-title">Sci-Fi</h3>
-          </Link>
-          <p>An adventurous sci-fi journey.</p>
-        </div>
-
-        {/* Genre Card for Horror */}
-        <div className="genre-card">
-          <img src={`${process.env.PUBLIC_URL}/images/Horror.jpg`} alt="Horror" className="genre-image" />
-          <Link to="/horror">
-            <h3 className="genre-title">Horror</h3>
-          </Link>
-          <p>A terrifying horror story.</p>
-        </div>
+      <center><h2>Explore Our Books</h2></center>
+      <div className="book-grid">
+        {books.map((book) => (
+          <div key={book._id} className="book-card">
+            <img
+              src={`https://my-library-backend-scms.onrender.com/${book.image}`}
+              alt={`${book.title} cover`}
+              className="book-image"
+              onError={(e) => { 
+                e.target.onerror = null; 
+                e.target.src = "/images/placeholder-image.jpg"; 
+              }}
+            />
+            <h3 className="book-title">{book.title}</h3>
+            <p className="book-description">{book.description}</p>
+          </div>
+        ))}
       </div>
+
+      {/* Plus button */}
+      <button className="add-book-button" onClick={() => setShowForm(!showForm)}>
+        +
+      </button>
+
+      {/* Form for adding a new book */}
+      {showForm && (
+        <div className="form-overlay">
+          <form className="add-book-form" onSubmit={handleSubmit} encType="multipart/form-data">
+            <button type="button" className="close-button" onClick={() => setShowForm(false)}>X</button>
+            <h3>Add a New Book</h3>
+            <input
+              type="text"
+              name="title"
+              placeholder="Name: "
+              value={newBook.title}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="text"
+              name="description"
+              placeholder="Description"
+              value={newBook.description}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="file"
+              name="image"
+              onChange={handleFileChange}
+              required
+            />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
