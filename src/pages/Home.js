@@ -13,7 +13,7 @@ const Home = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get('https://my-library-backend-scms.onrender.com/api/books');
+        const response = await axios.get('https://my-library-backend-uomv.onrender.com');
         setBooks(response.data);
       } catch (error) {
         console.error("Error fetching books:", error);
@@ -42,7 +42,7 @@ const Home = () => {
     formData.append('image', imageFile); // Append the image file to form data
 
     try {
-      const response = await axios.post('https://my-library-backend-scms.onrender.com/api/books', formData, {
+      const response = await axios.post('https://my-library-backend-uomv.onrender.com/api/books/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -67,12 +67,11 @@ const Home = () => {
         {books.map((book) => (
           <div key={book._id} className="book-card">
             <img
-              src={`https://my-library-backend-scms.onrender.com/${book.image}`}
+              src={`https://my-library-backend-uomv.onrender.com/${book.image}`}
               alt={`${book.title} cover`}
               className="book-image"
               onError={(e) => { 
                 e.target.onerror = null; 
-                e.target.src = "/images/placeholder-image.jpg"; 
               }}
             />
             <h3 className="book-title">{book.title}</h3>
