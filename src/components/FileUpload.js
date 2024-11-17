@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"; // Fix the typo "import axios form 'axios'" to "import axios from 'axios'"
+import axios from "axios"; 
 
 const FileUpload = () => {
   const [file, setFile] = useState("");
@@ -13,7 +13,7 @@ const FileUpload = () => {
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const res = await axios.post("/upload", formData, {
+      const res = await axios.post("/api/books", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

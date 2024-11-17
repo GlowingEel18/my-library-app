@@ -114,7 +114,7 @@ const Home = () => {
               onChange={handleFileChange}
               required
             />
-            <button type="submit">Submit</button>
+            <center><button type="submit">Submit</button></center>
           </form>
         </div>
       )}
