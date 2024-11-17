@@ -42,7 +42,7 @@ const Home = () => {
     formData.append('image', imageFile); // Append the image file to form data
 
     try {
-      const response = await axios.post('', formData, {
+      const response = await axios.post('https://my-library-backend-scms.onrender.com/api/books', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
