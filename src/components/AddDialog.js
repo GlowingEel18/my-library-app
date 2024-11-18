@@ -30,12 +30,12 @@ fetch("https://my-library-backend-uomv.onrender.com/api/books/", {
         });
 
     if (response.status === 200) {
-      setResult("House Successfully Added");
+      setResult("Book Successfully Added");
       event.target.reset(); //reset your form fields
-      props.addHousePlan(await response.json());
+      props.addBook(await response.json());
           props.closeDialog();
         } else {
-      console.log("Error adding house", response);
+      console.log("Error adding book", response);
       setResult(response.message);
     }
   };
