@@ -1,106 +1,88 @@
-import "@styles/dialog.css";
 import React, { useState } from "react";
+import "../styles/add-dialog.css";
 
-const AddDialog = (props) => {
-  const [inputs, setInputs] = useState({});
-  const [result, setResult] = useState("");
+const AddDialog = ({ closeDialog, addBook }) => {
+  const [newBook, setNewBook] = useState({
+    title: "",
+    description: "",
+    main_image: null,
+  });
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewBook({ ...newBook, [name]: value });
   };
 
-  const handleImageChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.files[0];
-    setInputs((values) => ({ ...values, [name]: value }));
+  const handleFileChange = (e) => {
+    setNewBook({ ...newBook, main_image: e.target.files[0] });
   };
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    setResult("Sending....");
-    const formData = new FormData(event.target);
-    
-   
-        const response = await fetch("https://my-library-backend-uomv.onrender.com/api/books/", {
-          method: "POST",
-          body: formData, // Automatically handles the boundary
-        });
-
-    if (response.status === 200) {
-      setResult("House Successfully Added");
-      event.target.reset(); //reset your form fields
-      props.addHousePlan(await response.json());
-          props.closeDialog();
-        } else {
-      console.log("Error adding house", response);
-      setResult(response.message);
+  const handleAddBook = () => {
+    if (!newBook.title || !newBook.description) {
+      alert("Please fill in all required fields.");
+      return;
     }
+    addBook(newBook); // Pass the new book details to the parent component
+    closeDialog(); // Close the dialog
   };
 
   return (
-    <div id="add-dialog" className="w3-modal">
-      <div className="w3-modal-content">
-        <div className="w3-container">
-          <span
-            id="dialog-close"
-            className="w3-button w3-display-topright"
-            onClick={props.closeDialog}
-          >
-            &times;
-          </span>
-          <form id="add-property-form" onSubmit={onSubmit}>
-            <p>
-              <label htmlFor="title"> Title: </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                value={inputs.title || ""}
-                onChange={handleChange}
-                required
-              />
-            </p>
-            <p>
-              <label htmlFor="description"> Description: </label>
-              <input
-                type="text"
-                id="description"
-                name="description"
-                value={inputs.description || ""}
-                onChange={handleChange}
-                required
-              />
-            </p>
+    <div className="modal-overlay">
+      <div className="modal-content">
+        {/* Close Button */}
+        <button className="close-dialog-button" onClick={closeDialog}>
+          &times;
+        </button>
+        <h2>Add New Book</h2>
+        <form className="add-form">
+          {/* Title Field */}
+          <label htmlFor="title">Title</label>
+          <input
+            id="title"
+            type="text"
+            name="title"
+            value={newBook.title}
+            onChange={handleChange}
+            required
+          />
 
-              <section className="columns">
-              <p id="img-prev-section">
-                <img
-                  id="img-prev"
-                  src={
-                    inputs.img != null ? URL.createObjectURL(inputs.img) : ""
-                  }
-                  alt=""
-                />
-              </p>
-              <p id="img-upload">
-                <label htmlFor="img">Upload Image:</label>
-                <input
-                  type="file"
-                  id="img"
-                  name="img"
-                  onChange={handleImageChange}
-                  accept="image/*"
-                />
-              </p>
-            </section>
-            <p>
-              <button type="submit">Submit</button>
-            </p>
-            <p>{result}</p>
-          </form>
-        </div>
+          {/* Description Field */}
+          <label htmlFor="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            value={newBook.description}
+            onChange={handleChange}
+            required
+          />
+
+          {/* Image Field */}
+          <label htmlFor="image">Upload Image</label>
+          <input
+            id="image"
+            type="file"
+            name="main_image"
+            onChange={handleFileChange}
+          />
+
+          {/* Buttons */}
+          <div className="dialog-buttons">
+            <button
+              type="button"
+              className="confirm-button"
+              onClick={handleAddBook}
+            >
+              Add Book
+            </button>
+            <button
+              type="button"
+              className="cancel-button"
+              onClick={closeDialog}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

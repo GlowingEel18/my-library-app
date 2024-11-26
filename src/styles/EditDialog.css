@@ -1,0 +1,90 @@
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dim the background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it appears above other elements */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 400px; /* Adjust width for better form alignment */
+    max-width: 90%;
+    text-align: center;
+    position: relative; /* Needed for the close button */
+  }
+  
+  /* Close Button */
+  .close-dialog-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  
+  .close-dialog-button:hover {
+    color: red; /* Change color on hover */
+  }
+  
+  /* Modal Title */
+  .modal-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: left; /* Align title to the left */
+  }
+  
+  /* Form Styling */
+  .edit-form {
+    display: flex;
+    flex-direction: column; /* Stack inputs vertically */
+    gap: 15px; /* Add spacing between inputs */
+  }
+  
+  .edit-form label {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 5px;
+  }
+  
+  .edit-form input,
+  .edit-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .edit-form textarea {
+    resize: none; /* Disable resizing */
+    height: 100px; /* Adjust height */
+  }
+  
+  .edit-form input[type="file"] {
+    border: none; /* Remove borders for file input */
+  }
+  
+  /* Buttons Container */
+  .dialog-buttons {
+    display: flex;
+    justify-content: space-between; /* Align buttons side by side */
+    margin-top: 20px;
+  }
+  

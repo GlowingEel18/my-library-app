@@ -1,33 +1,75 @@
-import React from 'react';
-import GenreCard from '../components/GenreCard';
+import React, { useState, useEffect } from "react";
+import Book from "../components/Book";
+import AddDialog from "../components/AddDialog";
+import "../styles/Home.css";
 
 const Home = () => {
-  const genres = [
-    { title: 'Fiction', description: 'Explore fictional worlds', imgUrl: 'path/to/fiction.jpg' },
-    { title: 'Mystery', description: 'Uncover mysteries', imgUrl: 'path/to/mystery.jpg' },
-    { title: 'Fantasy', description: 'Dive into fantasy realms', imgUrl: 'path/to/fantasy.jpg' },
-    { title: 'Science Fiction', description: 'Discover futuristic adventures', imgUrl: 'path/to/scifi.jpg' },
-    { title: 'Romance', description: 'Enjoy love stories', imgUrl: 'path/to/romance.jpg' },
-    { title: 'Non-Fiction', description: 'Learn from real stories', imgUrl: 'path/to/nonfiction.jpg' },
-    { title: 'Thriller', description: 'Experience heart-pounding excitement', imgUrl: 'path/to/thriller.jpg' },
-    { title: 'Biography', description: 'Read about famous lives', imgUrl: 'path/to/biography.jpg' },
-    { title: 'Historical Fiction', description: 'Journey through historical events', imgUrl: 'path/to/historicalfiction.jpg' },
-    { title: 'Horror', description: 'Face your fears', imgUrl: 'path/to/horror.jpg' },
-  ];
+  const [books, setBooks] = useState([]);
+  const [showAddDialog, setShowAddDialog] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch books from the API
+  const fetchBooks = async () => {
+    try {
+      const response = await fetch("https://my-library-backend-uomv.onrender.com/books");
+      const data = await response.json();
+      setBooks(data);
+    } catch (error) {
+      console.error("Failed to fetch books:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Add a new book
+  const addBook = (newBook) => {
+    setBooks((prevBooks) => [...prevBooks, newBook]);
+  };
+
+  // Delete a book by ID
+  const deleteBook = (id) => {
+    setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
+  };
+
+  // Close the Add Dialog
+  const closeAddDialog = () => {
+    setShowAddDialog(false);
+  };
+
+  // Fetch books on component mount
+  useEffect(() => {
+    fetchBooks();
+  }, []);
 
   return (
-    <div className="home">
-      <h2>Library Genres</h2>
-      <div className="genre-list">
-        {genres.map((genre, index) => (
-          <GenreCard
-            key={index}
-            title={genre.title}
-            description={genre.description}
-            imgUrl={genre.imgUrl}
-          />
-        ))}
-      </div>
+    <div id="home">
+      <center>
+        <h1 className="explore-heading">Explore our Books</h1>
+      </center>
+      <button id="add-book" onClick={() => setShowAddDialog(true)}>
+        +
+      </button>
+
+      {showAddDialog && <AddDialog addBook={addBook} closeDialog={closeAddDialog} />}
+
+      {loading ? (
+        <div className="loading-logo">
+          <h2>Loading books, please wait...</h2>
+        </div>
+      ) : (
+        <div className="book-container">
+          {books.map((book) => (
+            <Book
+              key={book.id || book._id} // Ensure unique key using `id` or `_id`
+              id={book.id || book._id}
+              title={book.title || "Untitled"} // Fallback for title
+              description={book.description || "No description available"} // Fallback for description
+              main_image={typeof book.main_image === "string" ? book.main_image : ""} // Ensure main_image is a string
+              onDelete={deleteBook}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
