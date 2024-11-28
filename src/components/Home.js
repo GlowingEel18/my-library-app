@@ -11,7 +11,8 @@ const Home = () => {
   // Fetch books from the API
   const fetchBooks = async () => {
     try {
-      const response = await fetch("https://my-library-backend-uomv.onrender.com/books");
+      //const response = await fetch("https://my-library-backend-uomv.onrender.com/books");
+      const response = await fetch("http://localhost:3001/api/books");
       const data = await response.json();
       setBooks(data);
     } catch (error) {

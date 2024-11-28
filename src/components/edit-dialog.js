@@ -1,23 +1,55 @@
 import React, { useState } from "react";
 import "../styles/EditDialog.css"; // Assuming you have this CSS file for styling
 
-const EditDialog = ({ book, closeDialog, editBook }) => {
-  const [updatedBook, setUpdatedBook] = useState(book);
+const EditDialog = (props) => {
+  const [inputs, setInputs] = useState({
+    _id: props._id,
+    title: props.title,
+    description: props.description,
+    prev_img: props.main_image,
+  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUpdatedBook({ ...updatedBook, [name]: value });
+
+  const handleChange = (event) => {
+    const title = event.target.title;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [title]: value }));
   };
 
-  const handleSaveChanges = () => {
-    editBook(updatedBook); // Call the editBook function with updated book details
-    closeDialog(); // Close the dialog after saving
+  const handleImageChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.files[0];
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
+  const [result, setResult] = useState("");
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult("Sending....");
+    const formData = new FormData(event.target);
+    const response = await fetch(
+      `http://localhost:3002/api/books/${props._id}`,
+      {
+        method: "PUT",
+        body: formData,
+      }
+    );
+
+    if (response.status === 200) {
+      setResult("Book Successfully updated");
+      event.target.reset(); //reset your form fields
+      props.editBook(await response.json());
+      props.closeDialog();
+    } else {
+      console.log("Error editing book", response);
+      setResult(response.message);
+    }
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <button className="close-dialog-button" onClick={closeDialog}>
+        <button className="close-dialog-button" onClick={props.closeDialog}>
           &times;
         </button>
         <h2>Edit Book</h2>
@@ -28,7 +60,7 @@ const EditDialog = ({ book, closeDialog, editBook }) => {
             id="title"
             type="text"
             name="title"
-            value={updatedBook.title}
+            value={inputs.title}
             onChange={handleChange}
             required
           />
@@ -38,30 +70,52 @@ const EditDialog = ({ book, closeDialog, editBook }) => {
           <textarea
             id="description"
             name="description"
-            value={updatedBook.description}
+            value={inputs.description}
             onChange={handleChange}
             required
           />
 
-          {/* Image Field */}
-          <label htmlFor="image">Image</label>
-          <input
-            id="image"
-            type="file"
-            name="main_image"
-            onChange={(e) =>
-              setUpdatedBook({ ...updatedBook, main_image: e.target.files[0] })
-            }
-          />
-
+          {/* FIXME */}
+          <section className="columns">
+              <p id="img-prev-section">
+                <img
+                  id="img-prev"
+                  src={
+                    inputs.img != null
+                      ? URL.createObjectURL(inputs.img)
+                      : inputs.prev_img != null
+                      ? `http://localhost:3002/${inputs.prev_img}`
+                      : ""
+                  }
+                  alt=""
+                />
+              </p>
+              <p id="img-upload">
+                <label htmlFor="img">Upload Image:</label>
+                <input
+                  type="file"
+                  id="img"
+                  name="main_image"
+                  onChange={handleImageChange}
+                  accept="image/*"
+                />
+              </p>
+          </section>
+          <p>
+            <button type="submit">Submit</button>
+          </p>
+          <p>{result}</p>
           {/* Buttons */}
           <div className="dialog-buttons">
-            <button type="button" className="confirm-button" onClick={handleSaveChanges}>
+          <section>
+            <button type="button" className="confirm-button" onClick={onSubmit}>
               Save Changes
             </button>
-            <button type="button" className="cancel-button" onClick={closeDialog}>
+            <button type="button" className="cancel-button" onClick={props.closeDialog}>
               Cancel
             </button>
+          </section>
+          <span>{result}</span>
           </div>
         </form>
       </div>

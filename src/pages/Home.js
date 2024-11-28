@@ -16,7 +16,8 @@ const Home = () => {
     (async () => {
       try {
         const response = await axios.get(
-          "https://my-library-backend-uomv.onrender.com/api/books/"
+          //"https://my-library-backend-uomv.onrender.com/api/books/"
+          "http://localhost:3001/api/books"
         );
         console.log(response.data);
         setBooks(response.data);
