@@ -2,6 +2,8 @@ import "../styles/dialog.css";
 import React, { useState } from "react";
 
 const DeleteDialog = (props) => {
+  console.log("DeleteDialog Props: ", JSON.stringify(props));
+
   const [result, setResult] = useState("");
 
   const deleteBook = async (event) => {

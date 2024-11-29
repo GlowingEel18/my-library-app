@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import "../styles/EditDialog.css"; // Assuming you have this CSS file for styling
 
 const EditDialog = (props) => {
+
+  console.log("EditDialog Props: ", JSON.stringify(props));
+
   const [inputs, setInputs] = useState({
     _id: props._id,
     title: props.title,
@@ -26,7 +29,14 @@ const EditDialog = (props) => {
   const onSubmit = async (event) => {
     event.preventDefault();
     setResult("Sending....");
-    const formData = new FormData(event.target);
+    //const formData = new FormData(event.target);
+    const formData = new FormData();
+    formData.append('_id', inputs._id);
+    formData.append('title', inputs.title);
+    formData.append('description', inputs.description);
+    formData.append('main_image', inputs.main_image);
+    console.log("formData BF Submit: ", formData);
+
     const response = await fetch(
       `http://localhost:3002/api/books/${props._id}`,
       {

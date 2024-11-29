@@ -11,7 +11,7 @@ const Book = (props) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showBook, setShowBook] = useState(true);
   const [book, setBook] = useState(props);
-
+  console.log('Inside Book: ', JSON.stringify(props));
   const imageSrc = `http://localhost:3001/${book.main_image}`;
   //const imageSrc = `https://my-library-backend-scms.onrender.com/${book.main_image}`;
 
@@ -48,8 +48,9 @@ const Book = (props) => {
             <EditDialog
               closeDialog={closeEditDialog}
               editBook={editBook}
-              _id={book._id}
+              _id={book.id}
               title={book.title}
+              description={book.description}
               main_image={book.main_image}
             />
           ) : (
@@ -60,8 +61,9 @@ const Book = (props) => {
             <DeleteDialog
               closeDialog={closeDeleteDialog}
               hideBook={hideBook}
-              _id={book._id}
+              _id={book.id}
               title={book.title}
+              description={book.description}
             />
           ) : (
             ""

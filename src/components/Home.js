@@ -29,7 +29,7 @@ const Home = () => {
 
   // Delete a book by ID
   const deleteBook = (id) => {
-    setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
+    setBooks((prevBooks) => prevBooks.filter((book) => book._id !== id));
   };
 
   // Close the Add Dialog
@@ -61,12 +61,11 @@ const Home = () => {
         <div className="book-container">
           {books.map((book) => (
             <Book
-              key={book.id || book._id} // Ensure unique key using `id` or `_id`
-              id={book.id || book._id}
-              title={book.title || "Untitled"} // Fallback for title
-              description={book.description || "No description available"} // Fallback for description
-              main_image={typeof book.main_image === "string" ? book.main_image : ""} // Ensure main_image is a string
-              onDelete={deleteBook}
+              key={book.title} // Ensure unique key using `id` or `_id`
+              _id={book._id}
+              title={book.title} // Fallback for title
+              description={book.description} // Fallback for description
+              main_image={book.main_image} // Ensure main_image is a string
             />
           ))}
         </div>
