@@ -1,24 +1,22 @@
 import React, { useState } from "react";
-import "../styles/EditDialog.css"; // Assuming you have this CSS file for styling
+import "../styles/EditDialog.css";
 
 const EditDialog = (props) => {
-
-  console.log("EditDialog Props: ", JSON.stringify(props));
-
   const [inputs, setInputs] = useState({
     _id: props._id,
-    title: props.title,
-    description: props.description,
-    prev_img: props.main_image,
+    title: props.title || "",
+    description: props.description || "",
+    prev_img: props.main_image || "",
   });
 
-
+  // Handle changes in text fields
   const handleChange = (event) => {
-    const title = event.target.title;
+    const name = event.target.name;
     const value = event.target.value;
-    setInputs((values) => ({ ...values, [title]: value }));
+    setInputs((values) => ({ ...values, [name]: value }));
   };
 
+  // Handle image upload changes
   const handleImageChange = (event) => {
     const name = event.target.name;
     const value = event.target.files[0];
@@ -26,44 +24,48 @@ const EditDialog = (props) => {
   };
 
   const [result, setResult] = useState("");
-  const onSubmit = async (event) => {
+  // Submit changes to the server
+  const onSubmit  = async (event) => {
     event.preventDefault();
-    setResult("Sending....");
+    setResult("Saving changes...");
+    console.log('Edit Dialog On Sumbit Event: ', event);
     //const formData = new FormData(event.target);
     const formData = new FormData();
-    formData.append('_id', inputs._id);
-    formData.append('title', inputs.title);
-    formData.append('description', inputs.description);
-    formData.append('main_image', inputs.main_image);
-    console.log("formData BF Submit: ", formData);
+    formData.append("title", inputs.title);
+    formData.append("description", inputs.description);
+    if (inputs.main_image) formData.append("main_image", 'images/'+inputs.main_image);
 
-    const response = await fetch(
-      `http://localhost:3002/api/books/${props._id}`,
-      {
+    try {
+      const response = await fetch(`http://localhost:3001/api/books/${props._id}`, {
         method: "PUT",
         body: formData,
-      }
-    );
+      });
 
-    if (response.status === 200) {
-      setResult("Book Successfully updated");
-      event.target.reset(); //reset your form fields
-      props.editBook(await response.json());
-      props.closeDialog();
-    } else {
-      console.log("Error editing book", response);
-      setResult(response.message);
+      if (response.status === 200) {
+        const updatedBook = await response.json();
+        setResult("Book successfully updated.");
+        event.target.reset(); //reset your form fields
+        props.editBook(updatedBook); // Update the book in the parent component
+        props.closeDialog(); // Close the dialog
+      } else {
+        setResult(response.message)
+        throw new Error("Failed to update the book.");
+      }
+    } catch (error) {
+      console.error("Error updating book:", error);
+      setResult("Error updating book. Please try again.");
     }
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
+        {/* Close Button */}
         <button className="close-dialog-button" onClick={props.closeDialog}>
           &times;
         </button>
         <h2>Edit Book</h2>
-        <form className="edit-form">
+        <form className="edit-form" onSubmit={onSubmit}>
           {/* Title Field */}
           <label htmlFor="title">Title</label>
           <input
@@ -85,47 +87,42 @@ const EditDialog = (props) => {
             required
           />
 
-          {/* FIXME */}
-          <section className="columns">
-              <p id="img-prev-section">
-                <img
-                  id="img-prev"
-                  src={
-                    inputs.img != null
-                      ? URL.createObjectURL(inputs.img)
-                      : inputs.prev_img != null
-                      ? `http://localhost:3002/${inputs.prev_img}`
-                      : ""
-                  }
-                  alt=""
-                />
-              </p>
-              <p id="img-upload">
-                <label htmlFor="img">Upload Image:</label>
-                <input
-                  type="file"
-                  id="img"
-                  name="main_image"
-                  onChange={handleImageChange}
-                  accept="image/*"
-                />
-              </p>
-          </section>
-          <p>
-            <button type="submit">Submit</button>
-          </p>
-          <p>{result}</p>
-          {/* Buttons */}
+          {/* Image Upload Section */}
+          <label htmlFor="main_image">Upload Image</label>
+          <div className="image-preview-section">
+            {inputs.main_image ? (
+              <img
+                src={
+                  inputs.main_image instanceof File
+                    ? URL.createObjectURL(inputs.main_image)
+                    : `http://localhost:3001/${inputs.prev_img}`
+                }
+                alt="Preview"
+                className="image-preview"
+              />
+            ) : (
+              <p>No image uploaded</p>
+            )}
+            <input
+              id="main_image"
+              type="file"
+              name="main_image"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </div>
+
+          {/* Result Message */}
+          {result && <p className="result-message">{result}</p>}
+
+          {/* Dialog Buttons */}
           <div className="dialog-buttons">
-          <section>
-            <button type="button" className="confirm-button" onClick={onSubmit}>
+            <button type="submit" className="confirm-button">
               Save Changes
             </button>
             <button type="button" className="cancel-button" onClick={props.closeDialog}>
               Cancel
             </button>
-          </section>
-          <span>{result}</span>
           </div>
         </form>
       </div>

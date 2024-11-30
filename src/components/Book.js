@@ -6,37 +6,37 @@ import DeleteDialog from "./delete-dialog";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
-const Book = ({ id, title, description, main_image, onDelete, onEdit }) => {
+const Book = (props) => {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showBook, setShowBook] = useState(true);
+  const [book, setBook] = useState(props);
+  console.log('Inside Book: ', JSON.stringify(props));
+  const imageSrc = `http://localhost:3001/${book.main_image}`;
+  //const imageSrc = `https://my-library-backend-scms.onrender.com/${book.main_image}`;
 
-  // Safely construct the image source
-  const imageSrc =
-    typeof main_image === "string" && main_image.startsWith("http")
-      ? main_image
-      : `https://my-library-backend-uomv.onrender.com/${main_image || "main_image.jpg"}`;
+  const openEditDialog = () => {
+    setShowEditDialog(true);
+  };
 
-  // Dialog Handlers
-  const openEditDialog = () => setShowEditDialog(true);
-  const closeEditDialog = () => setShowEditDialog(false);
-
-  const openDeleteDialog = () => setShowDeleteDialog(true);
-  const closeDeleteDialog = () => setShowDeleteDialog(false);
-
-  const handleEditSubmit = (updatedBook) => {
-    if (onEdit && typeof onEdit === "function") {
-      onEdit(updatedBook); // Call the parent `onEdit` with the updated book
-    }
+  const closeEditDialog = () => {
     setShowEditDialog(false);
   };
 
-  const handleDeleteConfirm = () => {
-    if (onDelete && typeof onDelete === "function") {
-      onDelete(id); // Call the parent `onDelete` with the book ID
-    }
+  const openDeleteDialog = () => {
+    setShowDeleteDialog(true);
+  };
+
+  const closeDeleteDialog = () => {
     setShowDeleteDialog(false);
-    setShowBook(false); // Hide the book after deletion
+  };
+
+  const editBook = (book) => {
+    setBook(book);
+  };
+
+  const hideBook = (book) => {
+    setShowBook(false);
   };
 
   // Fallback if book is hidden
@@ -45,21 +45,26 @@ const Book = ({ id, title, description, main_image, onDelete, onEdit }) => {
   return (
     <>
       {/* Edit Dialog */}
-      {showEditDialog && (
+      { showEditDialog && (
         <EditDialog
-          closeDialog={closeEditDialog}
-          onEditSubmit={handleEditSubmit}
-          book={{ id, title, main_image }}
+        closeDialog={closeEditDialog}
+        editBook={editBook}
+        _id={book.id}
+        title={book.title}
+        description={book.description}
+        main_image={book.main_image}
         />
       )}
 
       {/* Delete Dialog */}
       {showDeleteDialog && (
-        <DeleteDialog
-          bookTitle={title}
-          onDeleteConfirm={handleDeleteConfirm}
-          onCancel={closeDeleteDialog}
-        />
+         <DeleteDialog
+         closeDialog={closeDeleteDialog}
+         hideBook={hideBook}
+         _id={book.id}
+         title={book.title}
+         description={book.description}
+       />
       )}
 
       {/* Book Card */}
@@ -67,14 +72,14 @@ const Book = ({ id, title, description, main_image, onDelete, onEdit }) => {
         {/* Book Image */}
         <img
           src={imageSrc}
-          alt={title || "Book"}
+          alt={props.title || "Book"}
           className="genre-image"
           onError={(e) => (e.target.src = "/main_image.jpg")}
         />
 
         {/* Title and Description */}
-        <h2 className="book-title">{title || "Untitled"}</h2>
-        <p className="book-description">{description || "No description available."}</p>
+        <h2 className="book-title">{props.title || "Untitled"}</h2>
+        <p className="book-description">{props.description || "No description available."}</p>
 
         {/* Button Group */}
         <div className="button-group">

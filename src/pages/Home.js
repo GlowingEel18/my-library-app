@@ -27,22 +27,19 @@ const Home = () => {
   }, []);
 
   // Add a new book
-  const addBook = (newBook) => {
-    setBooks((prevBooks) => [...prevBooks, newBook]);
+  const addBook = (book) => {
+    setBooks((prevBooks) => [...prevBooks, book]);
   };
 
   // Delete a book
-  const deleteBook = (bookId) => {
-    setBooks((prevBooks) => prevBooks.filter((book) => book._id !== bookId));
+  const deleteBook = (id) => {
+    setBooks((prevBooks) => prevBooks.filter((book) => book._id !== id));
   };
 
   // Update a book (edit)
   const editBook = (updatedBook) => {
     setBooks((prevBooks) =>
-      prevBooks.map((book) =>
-        book._id === updatedBook._id ? updatedBook : book
-      )
-    );
+      prevBooks.map((book) => book._id === updatedBook._id ? updatedBook : book ));
   };
 
   // Open Add Dialog
@@ -93,13 +90,13 @@ const Home = () => {
       {/* Loading Indicator */}
       {loading ? (
         <div className="loading-logo">
-          <h2>Loading books, please wait...</h2>
+          <h2>Loading books, please wait...from pages Home.js</h2>
         </div>
       ) : (
         <div className="book-container">
           {books.map((book) => (
             <Book
-              key={book._id}
+              key={book.title}
               id={book._id}
               title={book.title}
               description={book.description}
