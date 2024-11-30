@@ -2,56 +2,55 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Book from "../components/Book";
 import AddDialog from "../components/add-dialog";
-import EditDialog from "../components/edit-dialog"; // Import the EditDialog component
-import "../pages/Home.css"; // Import the CSS file for styling
+import EditDialog from "../components/edit-dialog";
+import "../pages/Home.css";
 
 const Home = () => {
-  const [books, setBooks] = useState([]);
-  const [showAddDialog, setShowAddDialog] = useState(false);
-  const [editingBook, setEditingBook] = useState(null); // For tracking the book being edited
-  const [loading, setLoading] = useState(true); // For loading state
+  const [books, setBooks] = useState([]); // State to store books
+  const [showAddDialog, setShowAddDialog] = useState(false); // State for Add Dialog visibility
+  const [editingBook, setEditingBook] = useState(null); // State for tracking the book being edited
+  const [loading, setLoading] = useState(true); // State for loading indicator
 
-  // Fetch books on component load
+  // Fetch books when the component mounts
   useEffect(() => {
-    (async () => {
+    const fetchBooks = async () => {
       try {
-        const response = await axios.get(
-          //"https://my-library-backend-uomv.onrender.com/api/books/"
-          "http://localhost:3001/api/books"
-        );
-        console.log(response.data);
+        const response = await axios.get("http://localhost:3001/api/books/");
         setBooks(response.data);
       } catch (error) {
         console.error("Error fetching books:", error);
       } finally {
-        setLoading(false); // Stop loading
+        setLoading(false); // Stop loading once books are fetched
       }
-    })();
+    };
+    fetchBooks();
   }, []);
 
   // Add a new book
-  const addBook = (book) => {
-    setBooks((prevBooks) => [...prevBooks, book]);
+  const addBook = (newBook) => {
+    setBooks((prevBooks) => [...prevBooks, newBook]);
   };
 
   // Delete a book
-  const deleteBook = (id) => {
-    setBooks((prevBooks) => prevBooks.filter((book) => book._id !== id));
+  const deleteBook = (bookId) => {
+    setBooks((prevBooks) => prevBooks.filter((book) => book._id !== bookId));
   };
 
   // Update a book (edit)
   const editBook = (updatedBook) => {
     setBooks((prevBooks) =>
-      prevBooks.map((book) => (book._id === updatedBook._id ? updatedBook : book))
+      prevBooks.map((book) =>
+        book._id === updatedBook._id ? updatedBook : book
+      )
     );
   };
 
-  // Open Add Book Dialog
+  // Open Add Dialog
   const openAddDialog = () => {
     setShowAddDialog(true);
   };
 
-  // Close Add Book Dialog
+  // Close Add Dialog
   const closeAddDialog = () => {
     setShowAddDialog(false);
   };
@@ -71,12 +70,16 @@ const Home = () => {
       <center>
         <h1 className="explore-heading">Explore our Books</h1>
       </center>
+
+      {/* Add Book Button */}
       <button id="add-book" onClick={openAddDialog}>
         +
       </button>
 
       {/* Add Dialog */}
-      {showAddDialog && <AddDialog addBook={addBook} closeDialog={closeAddDialog} />}
+      {showAddDialog && (
+        <AddDialog addBook={addBook} closeDialog={closeAddDialog} />
+      )}
 
       {/* Edit Dialog */}
       {editingBook && (
@@ -87,7 +90,7 @@ const Home = () => {
         />
       )}
 
-      {/* Loading indicator */}
+      {/* Loading Indicator */}
       {loading ? (
         <div className="loading-logo">
           <h2>Loading books, please wait...</h2>
@@ -101,8 +104,8 @@ const Home = () => {
               title={book.title}
               description={book.description}
               main_image={book.main_image}
-              onDelete={deleteBook} // Pass delete handler
-              onEdit={() => openEditDialog(book)} // Pass edit handler
+              onDelete={deleteBook}
+              onEdit={() => openEditDialog(book)}
             />
           ))}
         </div>

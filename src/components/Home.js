@@ -1,53 +1,93 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Book from "../components/Book";
 import AddDialog from "../components/add-dialog";
+import DeleteDialog from "../components/delete-dialog"; // Import DeleteDialog
+import EditDialog from "../components/edit-dialog";
 import "./Home.css";
 
 const Home = () => {
-  const [books, setBooks] = useState([]);
-  const [showAddDialog, setShowAddDialog] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [books, setBooks] = useState([]); // State to store books
+  const [showAddDialog, setShowAddDialog] = useState(false); // Add dialog state
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false); // Delete dialog state
+  const [deletingBook, setDeletingBook] = useState(null); // Book to delete
+  const [editingBook, setEditingBook] = useState(null); // Book to edit
+  const [loading, setLoading] = useState(true); // Loading state
 
-   // Fetch books from the API
-   const fetchBooks = async () => {
-    try {
-      //const response = await fetch("https://my-library-backend-uomv.onrender.com/books");
-      const response = await fetch("http://localhost:3001/api/books");
-      const data = await response.json();
-      setBooks(data);
-    } catch (error) {
-      console.error("Failed to fetch books:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Fetch books when the component mounts
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/api/books");
+        setBooks(response.data);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+    fetchBooks();
+  }, []);
 
   // Add a new book
   const addBook = (newBook) => {
     setBooks((prevBooks) => [...prevBooks, newBook]);
   };
 
-  // Close the Add Dialog
-  const closeAddDialog = () => {
-    setShowAddDialog(false);
+  // Delete a book
+  const deleteBook = async () => {
+    if (!deletingBook) return;
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/api/books/${deletingBook._id}`
+      );
+      if (response.status === 200) {
+        setBooks((prevBooks) =>
+          prevBooks.filter((book) => book._id !== deletingBook._id)
+        );
+        setShowDeleteDialog(false); // Close the dialog
+        setDeletingBook(null); // Reset deletingBook state
+      } else {
+        console.error("Failed to delete the book");
+      }
+    } catch (error) {
+      console.error("Error deleting the book:", error);
+    }
   };
 
-  // Fetch books on component mount
-  useEffect(() => {
-    fetchBooks();
-  }, []);
-   return (
+  // Close Delete Dialog
+  const closeDeleteDialog = () => {
+    setDeletingBook(null); // Reset the book being deleted
+    setShowDeleteDialog(false); // Close the dialog
+  };
+
+  return (
     <div id="home">
       <center>
         <h1 className="explore-heading">Explore our Books</h1>
       </center>
+
       {/* Add Book Button */}
       <button id="add-book" onClick={() => setShowAddDialog(true)}>
         +
       </button>
 
-      {showAddDialog && <AddDialog addBook={addBook} closeDialog={closeAddDialog} />}
+      {/* Add Dialog */}
+      {showAddDialog && (
+        <AddDialog addBook={addBook} closeDialog={() => setShowAddDialog(false)} />
+      )}
 
+      {/* Delete Dialog */}
+      {showDeleteDialog && deletingBook && (
+        <DeleteDialog
+          bookTitle={deletingBook.title}
+          onDeleteConfirm={deleteBook}
+          closeDialog={closeDeleteDialog} // Pass the cancel handler
+        />
+      )}
+
+      {/* Loading Indicator */}
       {loading ? (
         <div className="loading-logo">
           <h2>Loading books, please wait...</h2>
@@ -56,11 +96,16 @@ const Home = () => {
         <div className="book-container">
           {books.map((book) => (
             <Book
-              key={book.title} // Ensure unique key using `id` or `_id`
-              _id={book._id}
-              title={book.title} // Fallback for title
-              description={book.description} // Fallback for description
-              main_image={book.main_image} // Ensure main_image is a string
+              key={book._id}
+              id={book._id}
+              title={book.title}
+              description={book.description}
+              main_image={book.main_image}
+              onDelete={() => {
+                setDeletingBook(book); // Set the book to delete
+                setShowDeleteDialog(true); // Show the delete dialog
+              }}
+              onEdit={() => setEditingBook(book)} // Pass edit handler
             />
           ))}
         </div>
