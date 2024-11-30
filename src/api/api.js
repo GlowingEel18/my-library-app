@@ -1,12 +1,22 @@
-import axios from "axios";
+export const deleteBook = async (bookId) => {
+  try {
+    const response = await fetch(
+      `https://my-library-backend-latest.onrender.com/api/books/${bookId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-const api = axios.create({
-  baseURL: "http://localhost:3000",
-});
+    if (!response.ok) {
+      throw new Error(`Failed to delete book: ${response.statusText}`);
+    }
 
-export const getBooks = () => api.get("/books");
-export const addBook = (bookData) => api.post("/books", bookData);
-export const deleteBook = (id) => api.delete(`/books/${id}`);
-export const updateBook = (id, bookData) => api.put(`/books/${id}`, bookData);
-
-export default api;
+    return response;
+  } catch (error) {
+    console.error("Error in deleteBook API:", error);
+    throw error;
+  }
+};

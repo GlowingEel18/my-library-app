@@ -1,28 +1,50 @@
-/* src/components/BookCard.css */
-.book-card {
-  text-align: center;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+/* Delete Button Styling */
+.delete-button {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px; /* Same as cancel-button */
+  padding: 10px 15px; /* Same as cancel-button */
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-flex; /* Ensure consistent layout */
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.book-card:hover {
+.delete-button:hover {
+  background-color: darkred;
   transform: scale(1.05);
 }
 
-.book-image {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
+/* Cancel Button Styling */
+.cancel-button {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px; /* Matches the confirm-button */
+  padding: 10px 15px; /* Matches the confirm-button */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-flex; /* Consistent layout with confirm-button */
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.book-title {
-  color: red;
-  margin: 10px 0;
+.cancel-button:hover {
+  background-color: darkred;
+  transform: scale(1.05);
 }
 
-.book-description {
-  color: #555;
+/* Align Buttons in a Row */
+.dialog-buttons {
+  display: flex;
+  justify-content: center; /* Center both buttons */
+  gap: 15px; /* Space between the buttons */
+  margin-top: 10px;
 }
