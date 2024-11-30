@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Book from "../components/Book";
-import AddDialog from "../components/AddDialog";
-import "../styles/Home.css";
+import AddDialog from "../components/add-dialog";
+import "./Home.css";
 
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Fetch books from the API
-  const fetchBooks = async () => {
+   // Fetch books from the API
+   const fetchBooks = async () => {
     try {
       //const response = await fetch("https://my-library-backend-uomv.onrender.com/books");
       const response = await fetch("http://localhost:3001/api/books");
@@ -27,11 +27,6 @@ const Home = () => {
     setBooks((prevBooks) => [...prevBooks, newBook]);
   };
 
-  // Delete a book by ID
-  const deleteBook = (id) => {
-    setBooks((prevBooks) => prevBooks.filter((book) => book._id !== id));
-  };
-
   // Close the Add Dialog
   const closeAddDialog = () => {
     setShowAddDialog(false);
@@ -41,12 +36,12 @@ const Home = () => {
   useEffect(() => {
     fetchBooks();
   }, []);
-
-  return (
+   return (
     <div id="home">
       <center>
         <h1 className="explore-heading">Explore our Books</h1>
       </center>
+      {/* Add Book Button */}
       <button id="add-book" onClick={() => setShowAddDialog(true)}>
         +
       </button>

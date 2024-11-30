@@ -36,7 +36,7 @@ const DeleteDialog = (props) => {
         </p>
         <div className="dialog-buttons">
         <section>
-          <button className="delete-button" onClick={deleteBook}> Yes </button>
+          <button className="delete-button" onClick={deleteBook}> Delete </button>
           <button className="cancel-button" onClick={props.closeDialog}> Cancel </button>
         </section>
         <span>{result}</span>

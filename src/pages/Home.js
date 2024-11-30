@@ -3,7 +3,7 @@ import axios from "axios";
 import Book from "../components/Book";
 import AddDialog from "../components/add-dialog";
 import EditDialog from "../components/edit-dialog"; // Import the EditDialog component
-import "./Home.css"; // Import the CSS file for styling
+import "../pages/Home.css"; // Import the CSS file for styling
 
 const Home = () => {
   const [books, setBooks] = useState([]);

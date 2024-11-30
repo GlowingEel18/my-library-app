@@ -19,5 +19,4 @@ const Book = ({ title, description, image }) => {
  );
 };
 
-
 export default Book;
