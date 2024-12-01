@@ -1,47 +1,71 @@
 import React, { useState } from "react";
 import "../styles/add-dialog.css";
 
-const AddDialog = ({ closeDialog, addBook }) => {
-  const [newBook, setNewBook] = useState({
-    title: "",
-    description: "",
-    main_image: null,
-  });
+const AddDialog = (props) => {
+  const [inputs, setInputs] = useState({});
+  const [result, setResult] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewBook({ ...newBook, [name]: value });
+
+   // Handle changes in text fields
+   const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleFileChange = (e) => {
-    setNewBook({ ...newBook, main_image: e.target.files[0] });
+  // Handle image upload changes
+  const handleImageChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.files[0];
+    setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleAddBook = () => {
-    if (!newBook.title || !newBook.description) {
-      alert("Please fill in all required fields.");
-      return;
+  // Submit changes to the server
+  const onSubmit  = async (event) => {
+    event.preventDefault();
+    setResult("Saving changes...");
+    console.log('Edit Dialog On Sumbit Event: ', event);
+    const formData = new FormData(event.target);
+
+    try {
+      const response = await fetch(`http://localhost:3001/api/books/`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.status === 200) {
+        const newBook = await response.json();
+        setResult("Book successfully updated.");
+        event.target.reset(); //reset your form fields
+        props.addBook(newBook); // Update the book in the parent component
+        props.closeDialog(); // Close the dialog
+      } else {
+        setResult(response.message)
+        throw new Error("Failed to update the book.");
+      }
+    } catch (error) {
+      console.error("Error updating book:", error);
+      setResult("Error updating book. Please try again.");
     }
-    addBook(newBook); // Pass the new book details to the parent component
-    closeDialog(); // Close the dialog
+
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
         {/* Close Button */}
-        <button className="close-dialog-button" onClick={closeDialog}>
+        <button className="close-dialog-button" onClick={props.closeDialog}>
           &times;
         </button>
         <h2>Add New Book</h2>
-        <form className="add-form">
+        <form id="add-property-form" className="add-form" onSubmit={onSubmit}>
           {/* Title Field */}
           <label htmlFor="title">Title</label>
           <input
             id="title"
             type="text"
             name="title"
-            value={newBook.title}
+            value={inputs.title || ""}
             onChange={handleChange}
             required
           />
@@ -51,40 +75,53 @@ const AddDialog = ({ closeDialog, addBook }) => {
           <textarea
             id="description"
             name="description"
-            value={newBook.description}
+            value={inputs.description}
             onChange={handleChange}
             required
           />
-
           {/* Image Field */}
-          <label htmlFor="image">Upload Image</label>
-          <input
-            id="image"
-            type="file"
-            name="main_image"
-            onChange={handleFileChange}
-          />
-
-          {/* Buttons */}
-          <div className="dialog-buttons">
+          <section className="columns">
+            <p id="img-prev-section">
+                <img
+                  id="img-prev"
+                  src={
+                    inputs.img != null ? URL.createObjectURL(inputs.img) : ""
+                  }
+                  alt=""
+                />
+              </p>
+              <p id="img-upload">
+                <label htmlFor="img">Upload Image:</label>
+                <input
+                  type="file"
+                  id="img"
+                  name="img"
+                  onChange={handleImageChange}
+                  accept="image/*"
+                />
+              </p>
+          </section>
+           {/* Buttons */}
+           <div className="dialog-buttons">
             <button
-              type="button"
+              type="submit"
               className="confirm-button"
-              onClick={handleAddBook}
+
             >
               Add Book
             </button>
             <button
               type="button"
               className="cancel-button"
-              onClick={closeDialog}
+              onClick={props.closeDialog}
             >
               Cancel
             </button>
           </div>
+          <p>{result}</p>
         </form>
+        </div>
       </div>
-    </div>
   );
 };
 

@@ -90,7 +90,7 @@ const Home = () => {
       {/* Loading Indicator */}
       {loading ? (
         <div className="loading-logo">
-          <h2>Loading books, please wait...from pages Home.js</h2>
+          <h2>Loading books, please wait...</h2>
         </div>
       ) : (
         <div className="book-container">

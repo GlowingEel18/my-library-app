@@ -4,9 +4,9 @@ import "../styles/EditDialog.css";
 const EditDialog = (props) => {
   const [inputs, setInputs] = useState({
     _id: props._id,
-    title: props.title || "",
-    description: props.description || "",
-    prev_img: props.main_image || "",
+    title: props.title,
+    description: props.description,
+    prev_img: props.main_image,
   });
 
   // Handle changes in text fields
@@ -28,12 +28,7 @@ const EditDialog = (props) => {
   const onSubmit  = async (event) => {
     event.preventDefault();
     setResult("Saving changes...");
-    console.log('Edit Dialog On Sumbit Event: ', event);
-    //const formData = new FormData(event.target);
-    const formData = new FormData();
-    formData.append("title", inputs.title);
-    formData.append("description", inputs.description);
-    if (inputs.main_image) formData.append("main_image", 'images/'+inputs.main_image);
+    const formData = new FormData(event.target);
 
     try {
       const response = await fetch(`http://localhost:3001/api/books/${props._id}`, {
@@ -42,10 +37,9 @@ const EditDialog = (props) => {
       });
 
       if (response.status === 200) {
-        const updatedBook = await response.json();
         setResult("Book successfully updated.");
         event.target.reset(); //reset your form fields
-        props.editBook(updatedBook); // Update the book in the parent component
+        props.editBook( await response.json()); // Update the book in the parent component
         props.closeDialog(); // Close the dialog
       } else {
         setResult(response.message)
@@ -88,13 +82,13 @@ const EditDialog = (props) => {
           />
 
           {/* Image Upload Section */}
-          <label htmlFor="main_image">Upload Image</label>
+          <label htmlFor="img">Upload Image</label>
           <div className="image-preview-section">
-            {inputs.main_image ? (
+            {inputs.img ? (
               <img
                 src={
-                  inputs.main_image instanceof File
-                    ? URL.createObjectURL(inputs.main_image)
+                  inputs.img instanceof File
+                    ? URL.createObjectURL(inputs.img)
                     : `http://localhost:3001/${inputs.prev_img}`
                 }
                 alt="Preview"
@@ -104,9 +98,9 @@ const EditDialog = (props) => {
               <p>No image uploaded</p>
             )}
             <input
-              id="main_image"
+              id="img"
               type="file"
-              name="main_image"
+              name="img"
               accept="image/*"
               onChange={handleImageChange}
             />
