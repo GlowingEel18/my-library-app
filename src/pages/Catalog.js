@@ -24,7 +24,7 @@ const Catalog = () => {
             title: "To Kill a Mockingbird",
             description: "To Kill a Mockingbird is a novel by Harper Lee published in 1960. Instantly successful, it became a classic of modern American literature. The novel is renowned for its warmth and humor, despite dealing with serious issues of rape and racial inequality. The story is told through the eyes of Scout Finch as her father, Atticus Finch, defends a black man, Tom Robinson, accused of raping a white woman.",
             genre: "Fiction",
-            image: `${process.env.PUBLIC_URL}/images/To Kill a Mockingbird.jpg`
+            image: `${process.env.PUBLIC_URL}/images/To Kill a MockingBird.jpg`
         },
         {
             id: 3,
