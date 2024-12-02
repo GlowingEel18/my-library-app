@@ -8,7 +8,7 @@ const DeleteDialog = (props) => {
 
   const deleteBook = async (event) => {
     const response = await fetch(
-      `http://localhost:3001/api/books/${props._id}`,
+      `https://my-library-backend-submission.onrender.com/api/books/${props._id}`,
       {
         method: "DELETE",
       }
