@@ -16,7 +16,7 @@ const DeleteDialog = (props) => {
     */
 
     const response = await fetch(
-      `http://localhost:3001/api/books/${props._id}`,
+      `https://my-library-db.onrender.com/api/books/${props._id}`,
       {
         method: "DELETE",
       }
