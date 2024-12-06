@@ -11,7 +11,8 @@ const BookList = () => {
   // Fetch all books from the server
   const fetchBooks = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/books");
+      const response = await axios.get("https://my-library-db.onrender.com/api/books");
+
       setBooks(response.data);
     } catch (error) {
       console.error(error);
@@ -23,7 +24,7 @@ const BookList = () => {
   const handleEdit = async (updatedBook) => {
     try {
       const response = await axios.put(
-        `http://localhost:3001/books/${updatedBook.id}`,
+        `https://my-library-db.onrender.com/api/books/${updatedBook.id}`,
         updatedBook
       );
 
@@ -46,7 +47,7 @@ const BookList = () => {
   // Handle deleting a book
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/books/${id}`);
+      await axios.delete(`https://my-library-db.onrender.com/api/books/${id}`);
       setMessage("Book deleted successfully!");
       fetchBooks(); // Refresh the book list
     } catch (error) {

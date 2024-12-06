@@ -15,13 +15,8 @@ const Home = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        /*
-        const response = await axios.get("https://my-library-backend-submission.onrender.com/api/books/");
-        setBooks(response.data);
-        */
 
-        
-        const response = await axios.get("http://localhost:3001/api/books/");
+        const response = await axios.get("https://my-library-db.onrender.com/api/books/");
         setBooks(response.data);
         
       } catch (error) {

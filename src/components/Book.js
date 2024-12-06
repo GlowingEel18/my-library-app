@@ -12,8 +12,7 @@ const Book = (props) => {
   const [showBook, setShowBook] = useState(true);
   const [book, setBook] = useState(props);
   console.log('Inside Book: ', JSON.stringify(props));
-  //const imageSrc = `http://localhost:3001/${book.main_image}`;
-  const imageSrc = `https://my-library-backend-submission.onrender.com/${book.main_image}`;
+  const imageSrc = `https://my-library-db.onrender.com/${book.main_image}`;
 
   const openEditDialog = () => {
     setShowEditDialog(true);
