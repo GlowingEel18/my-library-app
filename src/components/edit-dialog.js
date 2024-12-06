@@ -31,7 +31,13 @@ const EditDialog = (props) => {
     const formData = new FormData(event.target);
 
     try {
-      const response = await fetch(`https://my-library-backend-submission.onrender.com/api/books/${props._id}`, {
+      /*const response = await fetch(`https://my-library-backend-submission.onrender.com/api/books/${props._id}`, {
+        method: "PUT",
+        body: formData,
+      });
+      */
+
+      const response = await fetch(`http://localhost:3001/api/books/${props._id}`, {
         method: "PUT",
         body: formData,
       });
@@ -85,12 +91,22 @@ const EditDialog = (props) => {
           <label htmlFor="img">Upload Image</label>
           <div className="image-preview-section">
             {inputs.img ? (
+              
               <img
+              /*
                 src={
                   inputs.img instanceof File
                     ? URL.createObjectURL(inputs.img)
                     : `https://my-library-backend-submission.onrender.com/${inputs.prev_img}`
                 }
+                */
+
+                src={
+                  inputs.img instanceof File
+                    ? URL.createObjectURL(inputs.img)
+                    : `http://localhost:3001/api/books/${inputs.prev_img}`
+                }
+
                 alt="Preview"
                 className="image-preview"
               />
